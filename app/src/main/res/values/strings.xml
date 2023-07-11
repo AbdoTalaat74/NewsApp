@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">NewsApp</string>
+    <string name="breaking_news">Breaking News</string>
+    <string name="saved_news">Saved News</string>
+    <string name="search_news">Search News</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="close_app_confirmation">Are you sure you want to close the app ?</string>
+    <string name="okay">okay</string>
+    <string name="cancel">Cancel</string>
+
+</resources>

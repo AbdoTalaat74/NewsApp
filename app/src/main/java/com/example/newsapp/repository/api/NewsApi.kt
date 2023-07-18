@@ -1,4 +1,4 @@
-package com.example.newsapp.api
+package com.example.newsapp.repository.api
 
 import com.example.newsapp.models.NewsResponse
 import com.example.newsapp.utils.Constants.Companion.API_KEY
@@ -11,7 +11,7 @@ interface NewsApi {
     @GET("v2/top-headlines")
     suspend fun getBreakingNews(
         @Query("country")
-        countryCode: String = "us",
+        countryCode: String?="us",
         @Query("page")
         pageNumber:Int = 1,
         @Query("apiKey")

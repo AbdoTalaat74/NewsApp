@@ -14,6 +14,7 @@ abstract class ArticleDateBase : RoomDatabase() {
     abstract fun getArticleDao(): ArticlesDao
 
     companion object {
+        @Volatile
         private var instance: ArticleDateBase? = null
         private val LOCK = Any()
 
@@ -25,7 +26,7 @@ abstract class ArticleDateBase : RoomDatabase() {
             Room.databaseBuilder(
                 context.applicationContext,
                 ArticleDateBase::class.java,
-                "article_database.db"
+                "article_database"
             ).build()
     }
 

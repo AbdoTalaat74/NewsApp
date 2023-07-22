@@ -10,17 +10,38 @@
         android:name="com.example.newsapp.ui.breakingNews.BreakingNewsFragment"
         android:label="BreakingNewsFragment"
         tools:layout="@layout/fragment_breaking_news"
-        />
+        >
+        <action
+            android:id="@+id/action_breakingNewsFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/savedNewsFragment"
         android:name="com.example.newsapp.ui.savedNews.SavedNewsFragment"
         android:label="SavedNewsFragment"
         tools:layout="@layout/fragment_saved_news"
-        />
+        >
+        <action
+            android:id="@+id/action_savedNewsFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchNewsFragment"
         android:name="com.example.newsapp.ui.searchNews.SearchNewsFragment"
         android:label="SearchNewsFragment"
         tools:layout="@layout/fragment_search_news"
-        />
+        >
+        <action
+            android:id="@+id/action_searchNewsFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_article"
+        android:id="@+id/articleFragment"
+        android:name="com.example.newsapp.ui.article.ArticleFragment"
+        android:label="ArticleFragment" >
+        <argument
+            android:name="selectedArticle"
+            app:argType="com.example.newsapp.models.Article" />
+    </fragment>
 </navigation>

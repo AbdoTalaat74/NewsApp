@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.base.BaseViewModel
 import com.example.newsapp.db.ArticleDateBase
+import com.example.newsapp.models.Article
 import com.example.newsapp.models.NewsResponse
 import com.example.newsapp.repository.NewsRepository
 import com.example.newsapp.utils.Resource
@@ -16,7 +17,7 @@ class SearchNewsViewModel(ctx:Context):BaseViewModel<Navigator>() {
 
     private val newsRepository = NewsRepository(ArticleDateBase(ctx))
 
-
+    lateinit var navigator: Navigator
     private val _searchNews = MutableLiveData<Resource<NewsResponse>>()
     val searchNews: LiveData<Resource<NewsResponse>>
         get() = _searchNews
@@ -38,7 +39,9 @@ class SearchNewsViewModel(ctx:Context):BaseViewModel<Navigator>() {
         return Resource.Error(response.message())
     }
 
-
+    fun navigateToArticleFragment(article: Article){
+        navigator.onNavigateToArticleFragment(article)
+    }
 
 
 }

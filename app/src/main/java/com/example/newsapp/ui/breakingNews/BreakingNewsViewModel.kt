@@ -1,11 +1,13 @@
 package com.example.newsapp.ui.breakingNews
 
 import android.content.Context
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.base.BaseViewModel
 import com.example.newsapp.db.ArticleDateBase
+import com.example.newsapp.models.Article
 import com.example.newsapp.models.NewsResponse
 import com.example.newsapp.repository.NewsRepository
 import com.example.newsapp.utils.Resource
@@ -14,7 +16,7 @@ import retrofit2.Response
 
 class BreakingNewsViewModel(context: Context) :
     BaseViewModel<Navigator>() {
-
+    lateinit var navigator: Navigator
     private val newsRepository = NewsRepository(ArticleDateBase(context))
     var countryCode = "us"
 
@@ -43,6 +45,10 @@ class BreakingNewsViewModel(context: Context) :
 
     init {
         getBreakingNews(countryCode)
+    }
+
+    fun navigateToArticleFragment(article: Article){
+        navigator.onNavigateToArticleFragment(article)
     }
 
 }

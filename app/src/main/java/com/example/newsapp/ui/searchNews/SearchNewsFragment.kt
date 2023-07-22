@@ -5,19 +5,21 @@ import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.R
 import com.example.newsapp.adapters.ArticleListener
 import com.example.newsapp.adapters.NewsAdapter
 import com.example.newsapp.base.BaseFragment
 import com.example.newsapp.databinding.FragmentSearchNewsBinding
+import com.example.newsapp.models.Article
 import com.example.newsapp.utils.Resource
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SearchNewsFragment:BaseFragment<FragmentSearchNewsBinding,SearchNewsViewModel>() {
+class SearchNewsFragment:BaseFragment<FragmentSearchNewsBinding,SearchNewsViewModel>(),Navigator {
 
     private lateinit var adapter:NewsAdapter
     private val TAG = "SearchNewsFragment"
@@ -25,7 +27,7 @@ class SearchNewsFragment:BaseFragment<FragmentSearchNewsBinding,SearchNewsViewMo
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
-
+        viewModel.navigator = this
         var job:Job? = null
         viewDataBinding.etSearch.addTextChangedListener {editable ->
             job?.cancel()
@@ -48,9 +50,6 @@ class SearchNewsFragment:BaseFragment<FragmentSearchNewsBinding,SearchNewsViewMo
                     hideProgressBar()
                     response.data?.let {
                         adapter.differ.submitList(it.articles)
-                        it.articles.forEach { articles ->
-                            Log.e(TAG,articles.title)
-                        }
                     }
                 }
                 is Resource.Error->{
@@ -83,6 +82,7 @@ class SearchNewsFragment:BaseFragment<FragmentSearchNewsBinding,SearchNewsViewMo
     private fun initRecyclerView() {
         adapter = NewsAdapter(ArticleListener {
             Log.e(TAG,it.title)
+            viewModel.navigateToArticleFragment(it)
         })
         viewDataBinding.rvSearchNews.adapter = adapter
         viewDataBinding.rvSearchNews.layoutManager = LinearLayoutManager(activity)
@@ -95,5 +95,9 @@ class SearchNewsFragment:BaseFragment<FragmentSearchNewsBinding,SearchNewsViewMo
 
     private fun showProgressBar() {
         viewDataBinding.paginationProgressBar.visibility = View.VISIBLE
+    }
+
+    override fun onNavigateToArticleFragment(article: Article) {
+        findNavController().navigate(SearchNewsFragmentDirections.actionSearchNewsFragmentToArticleFragment(article))
     }
 }

@@ -7,5 +7,6 @@
     <string name="close_app_confirmation">Are you sure you want to close the app ?</string>
     <string name="okay">okay</string>
     <string name="cancel">Cancel</string>
+    <string name="search">Search...</string>
 
 </resources>

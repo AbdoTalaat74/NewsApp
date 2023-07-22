@@ -1,4 +1,4 @@
-package com.example.newsapp.repository.api
+package com.example.newsapp.api
 
 import com.example.newsapp.models.NewsResponse
 import com.example.newsapp.utils.Constants.Companion.API_KEY
@@ -19,7 +19,7 @@ interface NewsApi {
     ):Response<NewsResponse>
 
 
-    @GET("v2/top-headlines")
+    @GET("v2/everything")
     suspend fun searchForNews(
         @Query("q")
         searchQuery: String ,

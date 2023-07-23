@@ -19,4 +19,7 @@ interface ArticlesDao {
 
     @Delete
     suspend fun deleteArticle(article: Article)
+
+    @Query("select COUNT(*) from articles where url = :artUrl")
+    suspend fun isArtAlreadySaved(artUrl:String) : Long
 }

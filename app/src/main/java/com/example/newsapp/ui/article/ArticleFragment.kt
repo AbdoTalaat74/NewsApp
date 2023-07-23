@@ -13,11 +13,17 @@ class ArticleFragment:BaseFragment<FragmentArticleBinding,ArticleViewModel>() {
 
     private val args: ArticleFragmentArgs by navArgs()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        subscribeToLiveData()
         val article = args.selectedArticle
-
+        viewDataBinding.article = article
+        viewDataBinding.viewModel = viewModel
         viewDataBinding.webView.apply {
             webViewClient = WebViewClient()
             loadUrl(article.url)
+        }
+
+        viewDataBinding.fab.setOnClickListener {
+            viewModel.saveArticle(article)
         }
 
     }
@@ -29,7 +35,7 @@ class ArticleFragment:BaseFragment<FragmentArticleBinding,ArticleViewModel>() {
 
     override fun initViewModeL(): ArticleViewModel {
 
-        return ViewModelProvider(this)[ArticleViewModel::class.java]
+        return ViewModelProvider(this,ArticleVMFactory(requireContext()))[ArticleViewModel::class.java]
     }
 
     override fun getLayoutId(): Int {

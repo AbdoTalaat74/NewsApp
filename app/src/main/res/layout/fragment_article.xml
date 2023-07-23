@@ -4,7 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="article"
+            type="com.example.newsapp.models.Article" />
+        <variable
+            name="viewModel"
+            type="com.example.newsapp.ui.article.ArticleViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

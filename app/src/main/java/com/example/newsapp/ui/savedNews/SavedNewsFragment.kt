@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,13 +13,17 @@ import com.example.newsapp.adapters.ArticleListener
 import com.example.newsapp.adapters.NewsAdapter
 import com.example.newsapp.base.BaseFragment
 import com.example.newsapp.databinding.FragmentSavedNewsBinding
+import com.example.newsapp.db.ArticleDateBase
+import com.example.newsapp.models.Article
+import com.example.newsapp.repository.NewsRepository
 import com.google.android.material.snackbar.Snackbar
 
-class SavedNewsFragment:BaseFragment<FragmentSavedNewsBinding,SavedNewsViewModel>() {
+class SavedNewsFragment:BaseFragment<FragmentSavedNewsBinding,SavedNewsViewModel>(),Navigator {
     private lateinit var newsAdapter: NewsAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
+        viewModel.navigator = this
         viewModel.getSavedArticles().observe(viewLifecycleOwner){
             newsAdapter.differ.submitList(it)
         }
@@ -60,7 +65,7 @@ class SavedNewsFragment:BaseFragment<FragmentSavedNewsBinding,SavedNewsViewModel
     }
 
     override fun initViewModeL(): SavedNewsViewModel {
-        val vmFactory = SavedNewsVmFactory(requireContext())
+        val vmFactory = SavedNewsVmFactory(NewsRepository(ArticleDateBase(requireContext())))
         return ViewModelProvider(this,vmFactory)[SavedNewsViewModel::class.java]
     }
 
@@ -68,12 +73,16 @@ class SavedNewsFragment:BaseFragment<FragmentSavedNewsBinding,SavedNewsViewModel
         return R.layout.fragment_saved_news
     }
 
-    fun initRecyclerView(){
+    private fun initRecyclerView(){
         newsAdapter = NewsAdapter(ArticleListener {
-            Log.e("SavedNewsFragment",it.title)
+            viewModel.navigateToArticleFragment(it)
         })
         viewDataBinding.rvSavedNews.layoutManager = LinearLayoutManager(activity)
         viewDataBinding.rvSavedNews.adapter = newsAdapter
+    }
+
+    override fun onNavigateToArticleFragment(article: Article) {
+        findNavController().navigate(SavedNewsFragmentDirections.actionSavedNewsFragmentToArticleFragment(article))
     }
 
 }

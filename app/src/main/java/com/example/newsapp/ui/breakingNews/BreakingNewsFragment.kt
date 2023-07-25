@@ -14,7 +14,9 @@ import com.example.newsapp.adapters.ArticleListener
 import com.example.newsapp.adapters.NewsAdapter
 import com.example.newsapp.base.BaseFragment
 import com.example.newsapp.databinding.FragmentBreakingNewsBinding
+import com.example.newsapp.db.ArticleDateBase
 import com.example.newsapp.models.Article
+import com.example.newsapp.repository.NewsRepository
 import com.example.newsapp.utils.Resource
 
 class BreakingNewsFragment : BaseFragment<FragmentBreakingNewsBinding, BreakingNewsViewModel>(),Navigator {
@@ -56,7 +58,7 @@ class BreakingNewsFragment : BaseFragment<FragmentBreakingNewsBinding, BreakingN
     override fun initViewModeL(): BreakingNewsViewModel {
 
         val vmFactory = BreakingNewsVMFactory(
-            requireContext(),
+            NewsRepository(ArticleDateBase(requireContext()))
             )
         return ViewModelProvider(this, vmFactory)[BreakingNewsViewModel::class.java]
     }

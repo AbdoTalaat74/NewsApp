@@ -8,6 +8,8 @@ import androidx.navigation.fragment.navArgs
 import com.example.newsapp.R
 import com.example.newsapp.base.BaseFragment
 import com.example.newsapp.databinding.FragmentArticleBinding
+import com.example.newsapp.db.ArticleDateBase
+import com.example.newsapp.repository.NewsRepository
 
 class ArticleFragment:BaseFragment<FragmentArticleBinding,ArticleViewModel>() {
 
@@ -35,7 +37,7 @@ class ArticleFragment:BaseFragment<FragmentArticleBinding,ArticleViewModel>() {
 
     override fun initViewModeL(): ArticleViewModel {
 
-        return ViewModelProvider(this,ArticleVMFactory(requireContext()))[ArticleViewModel::class.java]
+        return ViewModelProvider(this,ArticleVMFactory(NewsRepository(ArticleDateBase(requireContext()))))[ArticleViewModel::class.java]
     }
 
     override fun getLayoutId(): Int {

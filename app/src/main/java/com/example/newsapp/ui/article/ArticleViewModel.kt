@@ -1,7 +1,5 @@
 package com.example.newsapp.ui.article
 
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.base.BaseViewModel
 import com.example.newsapp.db.ArticleDateBase
@@ -9,9 +7,8 @@ import com.example.newsapp.models.Article
 import com.example.newsapp.repository.NewsRepository
 import kotlinx.coroutines.launch
 
-class ArticleViewModel(ctx: Context) : BaseViewModel<Navigator>() {
+class ArticleViewModel(private val newsRepository: NewsRepository) : BaseViewModel<Navigator>() {
 
-    private val newsRepository = NewsRepository(ArticleDateBase(ctx))
     fun saveArticle(article: Article) = viewModelScope.launch {
         val existingArticleCount = newsRepository.isArticleSaved(article.url)
         if (existingArticleCount >0){

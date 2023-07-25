@@ -13,9 +13,8 @@ import com.example.newsapp.utils.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class SearchNewsViewModel(ctx:Context):BaseViewModel<Navigator>() {
+class SearchNewsViewModel(private val newsRepository: NewsRepository):BaseViewModel<Navigator>() {
 
-    private val newsRepository = NewsRepository(ArticleDateBase(ctx))
 
     lateinit var navigator: Navigator
     private val _searchNews = MutableLiveData<Resource<NewsResponse>>()

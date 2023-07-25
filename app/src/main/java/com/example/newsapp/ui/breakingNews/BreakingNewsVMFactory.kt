@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.newsapp.repository.NewsRepository
 
 class BreakingNewsVMFactory(
-    private val context: Context,
+    private val newsRepository: NewsRepository
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(BreakingNewsViewModel::class.java)) {
-            return BreakingNewsViewModel(context) as T
+            return BreakingNewsViewModel(newsRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

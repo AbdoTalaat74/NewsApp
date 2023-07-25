@@ -14,10 +14,10 @@ import com.example.newsapp.utils.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class BreakingNewsViewModel(context: Context) :
+class BreakingNewsViewModel(private val newsRepository: NewsRepository) :
     BaseViewModel<Navigator>() {
     lateinit var navigator: Navigator
-    private val newsRepository = NewsRepository(ArticleDateBase(context))
+
     var countryCode = "us"
 
 

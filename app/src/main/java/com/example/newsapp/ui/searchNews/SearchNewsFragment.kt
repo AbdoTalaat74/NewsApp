@@ -12,7 +12,9 @@ import com.example.newsapp.adapters.ArticleListener
 import com.example.newsapp.adapters.NewsAdapter
 import com.example.newsapp.base.BaseFragment
 import com.example.newsapp.databinding.FragmentSearchNewsBinding
+import com.example.newsapp.db.ArticleDateBase
 import com.example.newsapp.models.Article
+import com.example.newsapp.repository.NewsRepository
 import com.example.newsapp.utils.Resource
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -69,7 +71,7 @@ class SearchNewsFragment:BaseFragment<FragmentSearchNewsBinding,SearchNewsViewMo
     }
 
     override fun initViewModeL(): SearchNewsViewModel {
-        val vmFactory = SearchNewsVmFactory(requireContext())
+        val vmFactory = SearchNewsVmFactory(NewsRepository(ArticleDateBase(requireContext())))
         return ViewModelProvider(this,vmFactory)[SearchNewsViewModel::class.java]
     }
 

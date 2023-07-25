@@ -21,7 +21,7 @@ class ArticleFragment:BaseFragment<FragmentArticleBinding,ArticleViewModel>() {
         viewDataBinding.viewModel = viewModel
         viewDataBinding.webView.apply {
             webViewClient = WebViewClient()
-            loadUrl(article.url)
+            article.url?.let { loadUrl(it) }
         }
 
         viewDataBinding.fab.setOnClickListener {

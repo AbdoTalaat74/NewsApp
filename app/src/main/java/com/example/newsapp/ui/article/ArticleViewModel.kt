@@ -10,14 +10,16 @@ import kotlinx.coroutines.launch
 class ArticleViewModel(private val newsRepository: NewsRepository) : BaseViewModel<Navigator>() {
 
     fun saveArticle(article: Article) = viewModelScope.launch {
-        val existingArticleCount = newsRepository.isArticleSaved(article.url)
-        if (existingArticleCount >0){
-            // Article already exists
-            messageLiveData.postValue("Article already saved Previously")
-        }else{
-            // Article doesn't exist
-            newsRepository.saveArticle(article)
-            messageLiveData.postValue("Article Added Successfully")
+        val existingArticleCount = article.url?.let { newsRepository.isArticleSaved(it) }
+        if (existingArticleCount != null) {
+            if (existingArticleCount >0){
+                // Article already exists
+                messageLiveData.postValue("Article already saved Previously")
+            }else{
+                // Article doesn't exist
+                newsRepository.saveArticle(article)
+                messageLiveData.postValue("Article Added Successfully")
+            }
         }
 
     }
